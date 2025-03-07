@@ -1,0 +1,39 @@
+import java.util.HashSet;
+
+public class Permutation {
+    // Permutations WITH repetition
+    public static void permuteWithRepetition(String str, String result, int k) {
+        if (result.length() == k) {
+            System.out.println(result);
+            return;
+        }
+        for (int i = 0; i < str.length(); i++) {
+            permuteWithRepetition(str, result + str.charAt(i), k);
+        }
+    }
+
+    // Permutations WITHOUT repetition
+    public static void permuteWithoutRepetition(String str, String result, boolean[] used, int k) {
+        if (result.length() == k) {
+            System.out.println(result);
+            return;
+        }
+        for (int i = 0; i < str.length(); i++) {
+            if (!used[i]) {
+                used[i] = true;
+                permuteWithoutRepetition(str, result + str.charAt(i), used, k);
+                used[i] = false;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        String str = "ABC";
+        int k = 2;
+        System.out.println("Permutations WITH repetition:");
+        permuteWithRepetition(str, "", k);
+
+        System.out.println("\nPermutations WITHOUT repetition:");
+        permuteWithoutRepetition(str, "", new boolean[str.length()], k);
+    }
+}
