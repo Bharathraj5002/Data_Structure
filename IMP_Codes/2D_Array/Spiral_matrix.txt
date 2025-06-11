@@ -1,0 +1,33 @@
+class Main {
+    public static void main(String[] args) {
+        int r = 3;
+        int c = 4;
+
+        int arr[][] = {
+            {1, 2, 3, 4},
+            {5, 6, 7, 8},
+            {9, 10, 11, 12}
+        };
+        int rmin = 0,rmax = r-1,cmin = 0,cmax = c-1;
+        while(rmin<=rmax && cmin<=cmax){
+            for(int i=cmin;i<=cmax;i++){
+                System.out.print(arr[rmin][i]+" ");
+            }
+            rmin++;
+            for(int i=rmin;i<=rmax;i++){
+                System.out.print(arr[i][cmax]+" ");
+            }
+            cmax--;
+            if(rmin<=rmax){
+            for(int i = cmax;i>=cmin;i--){
+                System.out.print(arr[rmax][i]+" ");
+            }
+            rmax--;}
+            if(cmin<=cmax){
+            for(int i= rmax;i>=rmin;i--){
+                System.out.print(arr[i][cmin]+" ");
+            }
+            cmin++;}
+        }
+    }
+}
