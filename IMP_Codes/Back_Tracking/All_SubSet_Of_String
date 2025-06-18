@@ -1,0 +1,81 @@
+
+You are designing a feature for an AI-based text analysis system that must evaluate every possible subset (combination) of a given string. These subsets help analyze potential keyword patterns, rearrangements, and missing combinations.
+Write a program that prints all subsets (including the empty string) of a given string using backtracking. Subsets can be printed in lexicographical order (sorted order) for consistency.
+Input Format:
+A single string s (consisting of lowercase or uppercase English letters, no spaces).
+Output Format:
+Each subset on a new line.
+Subsets should be printed in lexicographical order.
+
+Constraints:
+
+1 ≤ len(s) ≤ 10
+The string can contain duplicate characters.
+Subsets should be unique (no duplicate subsets in output).
+
+Example:
+
+Sample Input:abc
+Sample Output:aababcacbbcc
+
+Explanation:
+
+NA
+
+Public Test Cases:
+#InputExpected Output1
+aa
+a aa
+2
+xyz
+x xy xyz xz y yz z
+3
+aab
+a aa aab ab b
+4
+abcd
+a ab abc abcd abd ac acd ad b bc bcd bd c cd d
+5
+cab
+a ab abc ac b bc c
+6
+a
+a
+7
+ab
+a ab b
+8
+abc
+a ab abc ac b bc c
+
+
+
+
+
+
+import java.util.Scanner;
+import java.util.TreeSet;
+import java.util.Arrays;
+class Main{
+  static TreeSet<String> set = new TreeSet<>();
+  public static void permutation(String str,String res,int ind){
+    if(ind==str.length()){
+      if(!res.isEmpty())
+        set.add(res);
+      return;
+    }
+    permutation(str,res+str.charAt(ind),ind+1);
+    permutation(str,res,ind+1);
+  }
+  public static void main(String[] args){
+    Scanner in = new Scanner(System.in);
+    String str = in.next();
+    char[] carr = str.toCharArray();
+    Arrays.sort(carr);
+    str = new String(carr);
+    permutation(str,"",0);
+    for(String s : set){
+      System.out.println(s);
+    }
+  }
+}
