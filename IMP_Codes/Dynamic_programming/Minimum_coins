@@ -1,0 +1,110 @@
+
+Given a set of coins and a total amount amount, return the minimum number of coins required to make up that amount. If it’s not possible, return -1.
+Input Format:
+First line: Two integers n (number of coin denominations) and amount
+Second line: n space-separated integers representing coin denominations
+Output Format:
+Single integer — minimum number of coins to make up the amount, or -1 if not possible
+
+Constraints:
+
+1 ≤ n ≤ 12
+1 ≤ amount ≤ 10^4
+1 ≤ coins[i] ≤ 10^4
+
+Example:
+
+Sample Input:3 111 2 5
+Sample Output:3
+
+Explanation:
+
+NA
+
+Public Test Cases:
+#InputExpected Output1
+4 0 1 2 5 10
+0
+2
+3 6 1 2 5
+2
+3
+1 100 1
+100
+4
+3 30 1 3 4
+8
+5
+2 27 5 10
+-1
+6
+3 11 1 2 5
+3
+7
+2 3 2 4
+-1
+8
+3 7 1 3 4
+2
+
+
+
+
+#USING DYNAMMIC PROGRAMMING
+import java.util.*;
+class Main {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
+        int arr[] = new int[n];
+        for(int i=0;i<n;i++){
+            arr[i] = in.nextInt();
+        }
+        int amt = in.nextInt();
+        int dp[] = new int[amt+1];
+        Arrays.fill(dp,amt+1);
+        dp[0] = 0;
+        
+        for(int i=1;i<=amt;i++){
+            for(int coins : arr)
+                if(coins<=i)
+                    dp[i] = Math.min(dp[i],dp[i-coins]+1);
+        }
+        System.out.println(dp[amt]);
+    }
+}
+
+
+#USING KNAPSACK
+import java.util.Scanner;
+class Main{
+  public static int coin(int[] arr,int amt,int n){
+    int dp[][] = new int[n+1][amt+1];
+    for(int i=0;i<=n;i++){
+      for(int c=0;c<=amt;c++){
+        if(c==0)
+          dp[i][0] = 0;
+        else
+          dp[i][c] = amt+1;
+      }
+    }
+    for(int i=1;i<=n;i++){
+      for(int c=1;c<=amt;c++){
+        if(arr[i-1]<=c)
+          dp[i][c] = Math.min(dp[i-1][c],dp[i][c-arr[i-1]]+1);
+        else
+          dp[i][c] = dp[i-1][c];
+      }
+    }
+    return dp[n][amt]>amt?-1:dp[n][amt];
+  }
+  public static void main(String[] args){
+    Scanner in = new Scanner(System.in);
+    int n = in.nextInt();
+    int amt = in.nextInt();
+    int arr[] = new int[n];
+    for(int i=0;i<n;i++)
+      arr[i] = in.nextInt();
+    System.out.println(coin(arr,amt,n));
+  }
+}
