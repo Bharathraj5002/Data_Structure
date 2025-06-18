@@ -1,0 +1,88 @@
+
+Given a set of n items, each with a weight and a value, determine the maximum value that can be obtained by selecting items such that their total weight does not exceed W.You can either include an item entirely or exclude it — no fractions allowed.
+Input Format:
+First line: Two integers n (number of items) and W (maximum weight capacity)
+Next n lines: Each line contains two integers value[i] and weight[i]
+Output Format:
+One integer: The maximum total value achievable
+
+Constraints:
+
+1 ≤ n ≤ 1000
+1 ≤ W ≤ 10^4
+1 ≤ value[i], weight[i] ≤ 1000
+
+Example:
+
+Sample Input:4 810 240 430 650 3
+Sample Output:90
+
+Explanation:
+
+Pick item 2 (value 40, weight 4)
+Pick item 4 (value 50, weight 3)
+Total weight = 7 ≤ 8, total value = 90
+
+Public Test Cases:
+#InputExpected Output1
+2 10 20 5 30 5
+50
+2
+3 5 60 10 100 20 120 30
+0
+3
+3 15 10 5 20 5 30 5
+60
+4
+4 10 10 2 20 5 30 6 25 4
+55
+5
+3 4 10 5 20 6 15 4
+15
+6
+4 8 10 2 40 4 30 6 50 3
+90
+7
+3 50 60 10 100 20 120 30
+220
+8
+1 10 100 20
+0
+
+
+
+import java.util.Scanner;
+import java.util.Arrays;
+class Main{
+  public static int knapsack(int n,int c,int[] val,int[] wei){
+    int dp[][] = new int[n+1][c+1];
+    for(int i=0;i<=n;i++){
+      for(int j = 0;j<=c;j++){
+        dp[i][j] = 0;
+      }
+    }
+    for(int i=1;i<=n;i++){
+      for(int j=1;j<=c;j++){
+        if(wei[i-1]<=j){
+          dp[i][j] = Math.max(dp[i-1][j],val[i-1]+dp[i-1][j-wei[i-1]]);
+        }
+        else{
+          dp[i][j] = dp[i-1][j];
+        }
+      }
+    }
+    return dp[n][c];
+  }
+  public static void main(String[] args){
+    Scanner in = new Scanner(System.in);
+    int n = in.nextInt();
+    int c = in.nextInt();
+    int val[] = new int[n];
+    int wei[] = new int[n];
+    for(int i=0;i<n;i++){
+      val[i] = in.nextInt();
+      wei[i] = in.nextInt();
+    }
+    System.out.println(knapsack(n,c,val,wei));
+  }
+}
