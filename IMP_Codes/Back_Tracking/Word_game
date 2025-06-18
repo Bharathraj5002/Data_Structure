@@ -1,0 +1,98 @@
+In a puzzle game, you’re given a 2D board of characters and a word. You must determine if the word can be formed by sequentially adjacent letters on the board.
+Letters may be adjacent horizontally or vertically.
+The same cell cannot be used more than once in a single word path.
+Input Format:
+First line: Two integers m and n (dimensions of the board).
+Next m lines: Each line contains n space-separated lowercase letters.
+Last line: A word (string) to search.
+Output Format:
+Print "YES" if the word exists in the grid, otherwise "NO".
+
+Constraints:
+
+1 ≤ m, n ≤ 10
+1 ≤ len(word) ≤ 20
+All characters are lowercase English letters.
+
+Example:
+
+Sample Input:3 4a b c es f c sa d e eabcced
+Sample Output:YES
+
+Explanation:
+
+NA
+
+Public Test Cases:
+#InputExpected Output1
+2 2 a b c d abcd
+NO
+2
+2 2 a b c d acdb
+YES
+3
+1 5 a b c d e abcde
+YES
+4
+3 4 a b c e s f c s a d e e abcb
+NO
+5
+3 4 a b c e s f c s a d e e see
+YES
+6
+3 4 a b c e s f c s a d e e abcced
+YES
+7
+3 4 a b c e s f c s a d e e see
+YES
+8
+3 4 a b c e s f c s a d e e abcb
+NO
+
+
+
+
+import java.util.Scanner;
+class Main{
+  static int r ,c;
+  static String str;
+  static char arr[][];
+  static boolean visit[][];
+  public static boolean word(int i,int j,int ind){
+    if(str.length()==ind)
+      return true;
+    if(i<0 || j<0 || i>=r || j>=c || str.charAt(ind) != arr[i][j] || visit[i][j])
+      return false;
+    
+    visit[i][j] = true;
+    boolean found = word(i+1,j,ind+1)||
+                    word(i,j+1,ind+1)||
+                    word(i-1,j,ind+1)||
+                    word(i,j-1,ind+1);
+    visit[i][j] = false;
+    return found;
+  }
+  public static void main(String[] args){
+    Scanner in = new Scanner(System.in);
+    r = in.nextInt();
+    c = in.nextInt();
+    arr = new char[r][c];
+    visit = new boolean[r][c];
+    for(int i=0;i<r;i++){
+      for(int j=0;j<c;j++){
+        arr[i][j] = in.next().charAt(0);
+      }
+    }
+    in.nextLine();
+    str = in.nextLine();
+    for(int i=0;i<r;i++){
+      for(int j=0;j<c;j++){
+        if(word(i,j,0)){
+          System.out.println("YES");
+          return;
+        }
+      }
+    }
+    System.out.println("NO");
+  }
+}
