@@ -1,0 +1,88 @@
+
+You are given an n x n maze where:
+1 represents a valid path,
+0 represents a blocked cell.
+The rat starts at position (0, 0) and wants to reach (n-1, n-1). It can move in 4 directions: Down (D) and Right (R) but only onto cells with value 1.
+Your task is to print the first path you find from the source to the destination. If no path exists, print "NO PATH".
+Input Format:
+First line: An integer n (the size of the grid).
+Next n lines: Each line contains n space-separated integers (0 or 1) representing the maze.
+Output Format:
+A single string of directions representing the path.
+Or "NO PATH" if no path exists.
+
+Constraints:
+
+1 ≤ n ≤ 10
+The rat can move only to cells with value 1.
+The rat cannot visit the same cell twice in one path.
+
+Example:
+
+Sample Input:41 0 0 01 1 0 11 1 0 00 1 1 1
+Sample Output:DDRDRR
+
+Explanation:
+
+NA
+
+Public Test Cases:
+#InputExpected Output1
+3 0 1 1 1 1 0 1 1 1
+NO PATH
+2
+3 1 1 1 1 1 1 1 1 0
+NO PATH
+3
+3 1 1 1 1 0 1 1 1 1
+RRDD
+4
+4 1 0 0 0 1 1 0 1 1 1 0 0 0 1 1 1
+DRDDRR
+5
+2 1 1 0 1
+RD
+6
+4 1 0 0 0 1 1 0 1 1 1 0 0 0 1 1 1
+DRDDRR
+7
+2 1 0 0 1
+NO PATH
+8
+2 1 1 0 1
+RD
+
+
+
+
+
+import java.util.Scanner;
+class Main{
+  public static boolean findpath(int n,int r,int c,int[][] arr,String path){
+    if(r==n-1 && c == n-1 && arr[r][c] == 1){
+      System.out.println(path);
+      return true;
+    }
+    if(r<n && c<n && arr[r][c] == 1){
+      if(findpath(n,r,c+1,arr,path+"R")){
+        return true;
+      }
+      if(findpath(n,r+1,c,arr,path+"D")){
+        return true;
+      }
+    }
+      return false;
+  }
+  public static void main(String[] args){
+    Scanner in = new Scanner(System.in);
+    int n = in.nextInt();
+    int arr[][] = new int[n][n];
+    for(int i=0;i<n;i++){
+      for(int j=0;j<n;j++){
+        arr[i][j] = in.nextInt();
+      }
+    }
+    if(!findpath(n,0,0,arr,""))
+      System.out.println("NO PATH");
+  }
+}
