@@ -1,0 +1,74 @@
+
+Write a program to compute T(n) for a given n.
+Input Format:
+A single integer n (the index in the Tribonacci sequence)
+Output Format:
+A single integer: the Tribonacci number T(n)
+
+Constraints:
+
+0 ≤ n ≤ 37
+
+Example:
+
+Sample Input:4
+Sample Output:4
+
+Explanation:
+
+Tribonacci sequence: 0, 1, 1, 2, 4, 7, 13, ...
+T(3) = 0 + 1 + 1 = 2
+T(4) = 1 + 1 + 2 = 4
+
+Public Test Cases:
+#InputExpected Output1
+6
+13
+2
+0
+0
+3
+1
+1
+4
+3
+2
+5
+10
+149
+6
+2
+1
+7
+5
+7
+
+
+import java.util.Scanner;
+import java.util.Arrays;
+public class Main
+{
+  public static int tribonaci(int n,int[] arr){
+    if(arr[n]!=-1){
+      return arr[n];
+    }
+    if(n==0 || n==1){
+      arr[n] = n;
+      return arr[n];
+    }
+    else if(n==2){
+      arr[n] = 1;
+      return arr[n];
+    }
+    arr[n] = tribonaci(n-1,arr)+tribonaci(n-2,arr)+tribonaci(n-3,arr);
+    return arr[n];
+  }
+	public static void main(String[] args)
+	{
+	  Scanner in = new Scanner(System.in);
+	  int n = in.nextInt();
+	  int arr[] = new int[n+1];
+	  Arrays.fill(arr,-1);
+	  System.out.println(tribonaci(n,arr));
+	}
+}
