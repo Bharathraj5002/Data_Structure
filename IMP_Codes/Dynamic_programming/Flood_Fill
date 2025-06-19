@@ -1,0 +1,85 @@
+
+You are given an image represented by a 2D array of integers, where each integer represents the color of a pixel.You are also given the starting pixel coordinates (sr, sc) and a new color.
+Your task is to perform a "flood fill" starting from the given pixel. Replace the color of the starting pixel and all 4-directionally connected pixels (up, down, left, right) that have the same original color with the new color.
+Return the modified image after performing the flood fill.
+Input Format:
+First line: Two integers m and n representing the number of rows and columns of the image.
+Next m lines: Each containing n space-separated integers representing the image matrix.
+Next line: Three integers: sr sc newColor (starting pixel row, column and the new color)
+Output Format:
+Print the updated image matrix, one row per line, with space-separated integers.
+
+Constraints:
+
+1 ≤ m, n ≤ 100
+0 ≤ image[i][j], newColor ≤ 65535
+0 ≤ sr < m, 0 ≤ sc < n
+
+Example:
+
+Sample Input:3 31 1 11 1 01 0 11 1 2
+Sample Output:2 2 22 2 02 0 1
+
+Explanation:
+
+Starting from (1, 1), the original color is 1. All connected 1s are updated to 2.
+
+Public Test Cases:
+#InputExpected Output1
+3 3 0 0 0 0 1 1 0 0 0 1 1 2
+0 0 0 0 2 2 0 0 0
+2
+1 1 5 0 0 5
+5
+3
+2 3 1 1 1 1 0 1 0 0 3
+3 3 3 3 0 3
+4
+4 4 1 1 1 1 1 0 0 1 1 1 1 1 0 1 1 1 0 0 3
+3 3 3 3 3 0 0 3 3 3 3 3 0 3 3 3
+5
+2 2 2 2 2 3 0 0 3
+3 3 3 3
+6
+2 2 0 0 0 0 0 0 1
+1 1 1 1
+7
+3 3 1 1 1 1 1 0 1 0 1 0 0 2
+2 2 2 2 2 0 2 0 1
+
+
+
+import java.util.Scanner;
+public class Main
+{
+  static int r,c;
+  public static void flood(int[][] arr,int sr,int sc,int col){
+    if(sr<0 || sc<0 || sr>=r || sc >=c || arr[sr][sc] == 0 || arr[sr][sc] == col)
+      return;
+    arr[sr][sc] = col;
+    flood(arr,sr,sc+1,col);
+    flood(arr,sr+1,sc,col);
+    flood(arr,sr,sc-1,col);
+    flood(arr,sr-1,sc,col);
+  }
+	public static void main(String[] args)
+	{
+		Scanner in = new Scanner(System.in);
+		r = in.nextInt();
+		c = in.nextInt();
+		int arr[][] = new int[r][c];
+		for(int i=0;i<r;i++)
+		  for(int j=0;j<c;j++)
+		    arr[i][j] = in.nextInt();
+		int sr = in.nextInt();
+		int sc = in.nextInt();
+		int col = in.nextInt();
+		flood(arr,sr,sc,col);
+		for(int i=0;i<r;i++){
+		  for(int j=0;j<c;j++){
+		    System.out.print(arr[i][j]+" ");
+		  }
+		  System.out.println();
+		}
+	}
+}
