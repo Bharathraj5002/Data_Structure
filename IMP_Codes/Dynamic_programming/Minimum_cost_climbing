@@ -1,0 +1,68 @@
+
+You are given an array cost[] where cost[i] is the cost of stepping on the i-th stair. Once you pay the cost at a step, you can climb either one or two steps.
+You can either start from step 0 or step 1. Your goal is to reach the top of the floor (beyond the last index) with the minimum cost.
+Input Format:
+First line: An integer n, the number of stairs.
+Second line: n space-separated integers representing the cost[] array.
+Output Format:
+A single integer — the minimum cost to reach the top.
+
+Constraints:
+
+2 ≤ n ≤ 1000
+0 ≤ cost[i] ≤ 999
+
+Example:
+
+Sample Input:101 100 1 1 1 100 1 1 100 1
+Sample Output:6
+
+Explanation:
+
+You can choose step 0 → 2 → 3 → 4 → 6 → 7 → topCosts: 1 + 1 + 1 + 1 + 1 + 1 = 6This is the minimum cost to reach the top.
+
+Public Test Cases:
+#InputExpected Output1
+6 0 2 2 1 0 0
+2
+2
+4 5 10 15 20
+20
+3
+5 1 100 1 1 100
+3
+4
+10 1 100 1 1 1 100 1 1 100 1
+6
+5
+8 0 0 0 1 1 1 1 1
+2
+6
+2 10 15
+10
+7
+3 10 15 20
+15
+
+
+
+
+import java.util.Scanner;
+public class Main
+{
+	public static void main(String[] args)
+	{
+	  Scanner in = new Scanner(System.in);
+	  int n = in.nextInt();
+	  int arr[] = new int[n];
+	  for(int i=0;i<n;i++)
+	    arr[i] = in.nextInt();
+	  int dp[] = new int[n+1];
+	  dp[0] = 0;
+	  dp[1] = 0;
+	  for(int i=2;i<=n;i++){
+	    dp[i] = Math.min(dp[i-1]+arr[i-1],dp[i-2]+arr[i-2]);
+	  }
+	  System.out.println(dp[n]);
+	}
+}
