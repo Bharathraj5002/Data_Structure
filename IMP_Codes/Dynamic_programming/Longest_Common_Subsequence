@@ -1,0 +1,78 @@
+
+Given two strings text1 and text2, return the length of their longest common subsequence.
+A subsequence is a sequence that appears in the same relative order, but not necessarily contiguous.
+Input Format:
+Two lines:
+First line: string text1
+Second line: string text2
+Output Format:
+One integer: Length of longest common subsequence
+
+Constraints:
+
+1 ≤ len(text1), len(text2) ≤ 1000
+Strings contain only lowercase English letters.
+
+Example:
+
+Sample Input:abcdeace
+Sample Output:3
+
+Explanation:
+
+NA
+
+Public Test Cases:
+#InputExpected Output1
+abcbdab bdcaba
+4
+2
+AGGTAB GXTXAYB
+4
+3
+aaaaa aaa
+3
+4
+abc a
+1
+5
+abcde edcba
+1
+6
+abcde ace
+3
+7
+abc abc
+3
+8
+abc def
+0
+
+
+
+import java.util.Scanner;
+class Main{
+  public static int lcs(String str1,String str2){
+    int s1 = str1.length();
+    int s2 = str2.length();
+    int dp[][] = new int[s1+1][s2+1];
+    for(int i=1;i<=s1;i++){
+      for(int j=1;j<=s2;j++){
+        if(str1.charAt(i-1) == str2.charAt(j-1)){
+          dp[i][j] = dp[i-1][j-1]+1;
+        }
+        else{
+          dp[i][j] = Math.max(dp[i-1][j],dp[i][j-1]);
+        }
+      }
+    }
+    return dp[s1][s2];
+    
+  }
+  public static void main(String[] args){
+    Scanner in = new Scanner(System.in);
+    String str1 = in.nextLine();
+    String str2 = in.nextLine();
+    System.out.println(lcs(str1,str2));
+  }
+}
