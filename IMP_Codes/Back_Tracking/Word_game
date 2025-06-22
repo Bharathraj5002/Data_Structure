@@ -52,47 +52,38 @@ NO
 
 
 
-import java.util.Scanner;
-class Main{
-  static int r ,c;
-  static String str;
-  static char arr[][];
-  static boolean visit[][];
-  public static boolean word(int i,int j,int ind){
-    if(str.length()==ind)
-      return true;
-    if(i<0 || j<0 || i>=r || j>=c || str.charAt(ind) != arr[i][j] || visit[i][j])
-      return false;
-    
-    visit[i][j] = true;
-    boolean found = word(i+1,j,ind+1)||
-                    word(i,j+1,ind+1)||
-                    word(i-1,j,ind+1)||
-                    word(i,j-1,ind+1);
-    visit[i][j] = false;
-    return found;
-  }
-  public static void main(String[] args){
-    Scanner in = new Scanner(System.in);
-    r = in.nextInt();
-    c = in.nextInt();
-    arr = new char[r][c];
-    visit = new boolean[r][c];
-    for(int i=0;i<r;i++){
-      for(int j=0;j<c;j++){
-        arr[i][j] = in.next().charAt(0);
-      }
+import java.util.*;
+class Main {
+    static int r,c;
+    public static boolean word(char[][] arr,int s,int e,int ind,String str){
+        if(s>=r || e>=c || s<0 || e<0 || arr[s][e] != str.charAt(ind))
+             return false;
+        System.out.println(ind+" : "+str.charAt(ind)+" : "+arr[s][e]+" : "+s+ " : "+e);
+        if( arr[s][e] == str.charAt(ind))
+            ind++;
+        if(ind == str.length())
+            return true;
+        if(word(arr,s,e+1,ind,str))   return true;
+        if(word(arr,s+1,e,ind,str))   return true;
+        if(word(arr,s-1,e,ind,str))   return true;
+        if(word(arr,s,e-1,ind,str))   return true;
+        return false;
     }
-    in.nextLine();
-    str = in.nextLine();
-    for(int i=0;i<r;i++){
-      for(int j=0;j<c;j++){
-        if(word(i,j,0)){
-          System.out.println("YES");
-          return;
-        }
-      }
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        r = in.nextInt();
+        c = in.nextInt();
+        char[][] arr = new char[r][c];
+        for(int i=0;i<r;i++)
+            for(int j=0;j<c;j++)
+                arr[i][j] = in.next().charAt(0);
+        in.nextLine();
+        String str = in.nextLine();
+        System.out.println(str);
+        for(int i=0;i<r;i++)
+            for(int j=0;j<c;j++)
+                if(word(arr,i,j,0,str)){
+                    System.out.println("found");
+                    return;}
+        System.out.println("not found");
     }
-    System.out.println("NO");
-  }
-}
