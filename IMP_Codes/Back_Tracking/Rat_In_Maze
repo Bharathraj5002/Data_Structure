@@ -56,33 +56,35 @@ RD
 
 
 
-import java.util.Scanner;
-class Main{
-  public static boolean findpath(int n,int r,int c,int[][] arr,String path){
-    if(r==n-1 && c == n-1 && arr[r][c] == 1){
-      System.out.println(path);
-      return true;
+import java.util.*;
+class Main {
+    public static boolean rat(int[][] arr,int s,int e,int n,String path,boolean visit[][]){
+        if(s<0||e<0 || s>=n || e>=n || arr[s][e] == 0|| visit[s][e])
+            return false;
+        if(s == n-1 && e == n-1){
+            System.out.println(path);
+            return true;
+        }
+        visit[s][e] = true;
+        if(rat(arr,s,e+1,n,path+"R",visit))   return true;
+        if(rat(arr,s+1,e+1,n,path+"(RD)",visit))    return true;
+        if(rat(arr,s+1,e,n,path+"D",visit))   return true;
+        if(rat(arr,s+1,e-1,n,path+"(LD)",visit))    return true;
+        if(rat(arr,s,e-1,n,path+"L",visit))   return true;
+        if(rat(arr,s-1,e-1,n,path+"(LT)",visit))    return true;
+        if(rat(arr,s-1,e,n,path+"T",visit))   return true;
+        if(rat(arr,s-1,e+1,n,path+"(RT)",visit))    return true;
+        visit[s][e] = false;
+        return false;
     }
-    if(r<n && c<n && arr[r][c] == 1){
-      if(findpath(n,r,c+1,arr,path+"R")){
-        return true;
-      }
-      if(findpath(n,r+1,c,arr,path+"D")){
-        return true;
-      }
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int n= in.nextInt();
+        int[][] arr = new int[n][n];
+        for(int i=0;i<n;i++)
+            for(int j=0;j<n;j++)
+                arr[i][j] = in.nextInt();
+        
+        System.out.println(rat(arr,1,3,n,"",new boolean[n][n]));      
     }
-      return false;
-  }
-  public static void main(String[] args){
-    Scanner in = new Scanner(System.in);
-    int n = in.nextInt();
-    int arr[][] = new int[n][n];
-    for(int i=0;i<n;i++){
-      for(int j=0;j<n;j++){
-        arr[i][j] = in.nextInt();
-      }
-    }
-    if(!findpath(n,0,0,arr,""))
-      System.out.println("NO PATH");
-  }
 }
