@@ -14,7 +14,11 @@ Constraints:
 
 Example:
 
-Sample Input:4 810 240 430 650 3
+Sample Input:4 8
+10 2
+40 4
+30 6
+50 3
 Sample Output:90
 
 Explanation:
